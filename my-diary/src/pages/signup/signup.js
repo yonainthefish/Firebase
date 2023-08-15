@@ -1,10 +1,13 @@
 import {useState} from "react";
 import styles from "./Signup.module.css";
+import {useSignup} from "../../hooks/useSignup";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const {error, isPending, signup} = useSignup();
+
   const handleData = (event) => {
     if (event.target.value === "email") {
       setEmail(event.target.value);
@@ -17,7 +20,7 @@ export default function Signup() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password);
+    signup(email, password, displayName);
   };
 
   return (
@@ -33,7 +36,9 @@ export default function Signup() {
         <label htmlFor="myNickName">닉네임: </label>
         <input type="text" id="myNickName" required value={displayName} onChange={handleData} />
 
-        <button type="submit" className={styles.btn}>회원가입</button>
+        <button type="submit" className={styles.btn}>
+          회원가입
+        </button>
       </fieldset>
     </form>
   );
